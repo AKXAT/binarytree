@@ -29,6 +29,22 @@ class BinarySearchTreeNode:
         if self.right:
             elements += self.right.in_order_traversal()
         return elements
+    def search(self,value):
+        if self.data == value:
+            return True
+        if value < self.data:
+            #then the value might be in the left subtree
+            if self.left:#to check if we have a left subtree
+                return self.left.search(value)
+            else:
+                return False
+            
+        if value > self.data:
+            #then the value might be in the right subtree
+            if self.right:#to check if we have a right subtree
+                return self.right.search(value)
+            else:
+                return False
 
 def build_tree(element):
     root = BinarySearchTreeNode(element[0])
@@ -40,3 +56,4 @@ if __name__ == '__main__':
     numbers = [3,4,6,7,32,5,6,7,54,34,56]
     newtree  = build_tree(numbers)
     print(newtree.in_order_traversal())
+    print(newtree.search(20))
