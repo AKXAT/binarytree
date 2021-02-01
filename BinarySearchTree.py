@@ -54,6 +54,27 @@ class BinarySearchTreeNode:
             return self.left.find_max()
         return self.data
 
+    def delete(self,value):     
+        if value < self.data:
+            if self.left:
+                self.left = self.left.delete(value)
+        elif value > self.data:
+            if self.right:
+                self.right = self.right.delete(value)
+        else:
+            if self.left is None and self.right is None :
+                return None 
+            elif self.left is None:
+                return self.right
+            elif self.right is None:
+                return self.left
+
+            min_value = self.right.find_min()
+            self.data = min_value
+            self.right = self.right.delete(min_value) 
+
+        return self
+
 def build_tree(element):
     root = BinarySearchTreeNode(element[0])
     for i in range(1,len(element)):
@@ -61,9 +82,10 @@ def build_tree(element):
     return root
 
 if __name__ == '__main__':
-    numbers = [3,4,6,7,32,5,6,7,54,34,56]
-    newtree  = build_tree(numbers)
+    newtree  = build_tree([3,4,6,7,32,5,6,7,54,34,56])
     print(newtree.in_order_traversal())
-    print(newtree.search(20))
-    print(f'{newtree.find_max()} is the maximum')
-    print(f'{newtree.find_min()} is the minimum')
+    #print(newtree.search(20))
+    #print(f'{newtree.find_max()} is the maximum')
+    #print(f'{newtree.find_min()} is the minimum')
+    newtree.delete(4)
+    print(newtree.in_order_traversal())
